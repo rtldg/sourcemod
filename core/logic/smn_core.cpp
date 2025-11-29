@@ -869,6 +869,13 @@ static cell_t LoadFromAddress(IPluginContext *pContext, const cell_t *params)
 		addr = pseudoAddr.FromPseudoAddress(params[1]);
 	}
 
+	intptr_t offsetFromAddr = 0;
+	if (params[0] >= 3)
+	{
+		offsetFromAddr = params[3];
+		addr = (void*)(((char*)addr) + offsetFromAddr);
+	}
+
 	if (addr == NULL)
 	{
 		return pContext->ThrowNativeError("Address cannot be null");
@@ -897,6 +904,13 @@ static cell_t StoreToAddress(IPluginContext *pContext, const cell_t *params)
 	void *addr = reinterpret_cast<void*>(params[1]);
 	if (pContext->GetRuntime()->FindPubvarByName("__Virtual_Address__", nullptr) == SP_ERROR_NONE) {
 		addr = pseudoAddr.FromPseudoAddress(params[1]);
+	}
+
+	intptr_t offsetFromAddr = 0;
+	if (params[0] >= 5)
+	{
+		offsetFromAddr = params[5];
+		addr = (void*)(((char*)addr) + offsetFromAddr);
 	}
 
 	if (addr == NULL)
@@ -955,6 +969,13 @@ static cell_t LoadAddressFromAddress(IPluginContext *pContext, const cell_t *par
 		addr = pseudoAddr.FromPseudoAddress(params[1]);
 	}
 
+	intptr_t offsetFromAddr = 0;
+	if (params[0] >= 2)
+	{
+		offsetFromAddr = params[2];
+		addr = (void*)(((char*)addr) + offsetFromAddr);
+	}
+
 	if (addr == NULL)
 	{
 		return pContext->ThrowNativeError("Address cannot be null");
@@ -976,6 +997,13 @@ static cell_t StoreAddressToAddress(IPluginContext *pContext, const cell_t *para
 	void *addr = reinterpret_cast<void*>(params[1]);
 	if (pContext->GetRuntime()->FindPubvarByName("__Virtual_Address__", nullptr) == SP_ERROR_NONE) {
 		addr = pseudoAddr.FromPseudoAddress(params[1]);
+	}
+
+	intptr_t offsetFromAddr = 0;
+	if (params[0] >= 4)
+	{
+		offsetFromAddr = params[4];
+		addr = (void*)(((char*)addr) + offsetFromAddr);
 	}
 
 	if (addr == NULL)

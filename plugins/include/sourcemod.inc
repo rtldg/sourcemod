@@ -736,10 +736,13 @@ enum Address
  * @param addr          Address to a memory location.
  * @param size          How many bytes should be read.
  *                      If loading a floating-point value, use NumberType_Int32.
+ * @param offsetFromAddr  With the advent of "Virtual Address",
+ *                        you cannot easily do pointer-arithmetic.
+ *                        This is a slight work-around.
  * @return              The value that is stored at that address.
  * @error               Address is null or pointing to reserved memory.
  */
-native any LoadFromAddress(Address addr, NumberType size);
+native any LoadFromAddress(Address addr, NumberType size, int offsetFromAddr = 0);
 
 /**
  * Store up to 4 bytes to a memory address.
@@ -750,18 +753,24 @@ native any LoadFromAddress(Address addr, NumberType size);
  *                                 If storing a floating-point value, use NumberType_Int32.
  * @param updateMemAccess          If true, SourceMod will set read / write / exec permissions
  *                                 on the memory page being written to.
+ * @param offsetFromAddr           With the advent of "Virtual Address",
+ *                                 you cannot easily do pointer-arithmetic.
+ *                                 This is a slight work-around.
  * @error                          Address is null or pointing to reserved memory.
  */
-native void StoreToAddress(Address addr, any data, NumberType size, bool updateMemAccess = true);
+native void StoreToAddress(Address addr, any data, NumberType size, bool updateMemAccess = true, int offsetFromAddr = 0);
 
 /**
  * Load sizeof(void*) from a memory address.
  *
  * @param addr          Address to a memory location.
+ * @param offsetFromAddr  With the advent of "Virtual Address",
+ *                        you cannot easily do pointer-arithmetic.
+ *                        This is a slight work-around.
  * @return              The address that is stored at that address.
  * @error               Address is null or pointing to reserved memory.
  */
-native Address LoadAddressFromAddress(Address addr);
+native Address LoadAddressFromAddress(Address addr, int offsetFromAddr = 0);
 
 /**
  * Store sizeof(void*) bytes to a memory address.
@@ -770,9 +779,12 @@ native Address LoadAddressFromAddress(Address addr);
  * @param data                     Address to store at that location.
  * @param updateMemAccess          If true, SourceMod will set read / write / exec permissions
  *                                 on the memory page being written to.
+ * @param offsetFromAddr           With the advent of "Virtual Address",
+ *                                 you cannot easily do pointer-arithmetic.
+ *                                 This is a slight work-around.
  * @error                          Address is null or pointing to reserved memory.
  */
-native void StoreAddressToAddress(Address addr, Address data, bool updateMemAccess = true);
+native void StoreAddressToAddress(Address addr, Address data, bool updateMemAccess = true, int offsetFromAddr = 0);
 
 methodmap FrameIterator < Handle {
 	// Creates a stack frame iterator to build your own stack traces.
